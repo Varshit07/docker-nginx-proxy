@@ -28,5 +28,5 @@ docker-compose up --build
 ## Stopping the application containers
 
 ```shell
-docker-compose up --down
+docker-compose down
 ```
