@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Year Countdown</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+        font-family: Ubuntu;
+        color: white;
+      }
+
+      .countdown {
+        display: none;
+        transform: scale(3);
+      }
+
+      .time {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="heading" class="heading">Countdown to</h1>
+    <div id="countdown" class="countdown">
+      <div class="time">
+        <h2 id="days">00</h2>
+        <small>days</small>
+      </div>
+      <div class="time">
+        <h2 id="hours">00</h2>
+        <small>hours</small>
+      </div>
+      <div class="time">
+        <h2 id="minutes">00</h2>
+        <small>minutes</small>
+      </div>
+      <div class="time">
+        <h2 id="seconds">00</h2>
+        <small>seconds</small>
+      </div>
+    </div>
+    <script>
+      const days = document.querySelector('#days')
+      const hours = document.querySelector('#hours')
+      const minutes = document.querySelector('#minutes')
+      const seconds = document.querySelector('#seconds')
+      const countdown = document.querySelector('#countdown')
+      const heading = document.querySelector('#heading')
+      const body = document.querySelector('body')
+
+      const nextNewYear = new Date(
+        `January 01 ${new Date().getFullYear() + 1} 00:00:00`
+      )
+      heading.innerHTML = `Countdown to ${nextNewYear.getFullYear()}`
+      const colors = ['#F298D1', '#E26FE2', '#8278CC', '#64E05C', '#FFC19E']
+
+      const updateTime = () => {
+        const currentTime = new Date()
+        const timeToNextNewYear = Math.floor((nextNewYear - currentTime) / 1000)
+
+        const daysToSet = Math.floor(timeToNextNewYear / 60 / 60 / 24)
+        const hoursToSet = Math.floor(timeToNextNewYear / 60 / 60) % 24
+        const minutesToSet = Math.floor(timeToNextNewYear / 60) % 60
+        const secondsToSet = Math.floor(timeToNextNewYear) % 60
+
+        days.innerHTML = daysToSet
+        hours.innerHTML = hoursToSet < 10 ? `0${hoursToSet}` : hoursToSet
+        minutes.innerHTML =
+          minutesToSet < 10 ? `0${minutesToSet}` : minutesToSet
+        seconds.innerHTML =
+          secondsToSet < 10 ? `0${secondsToSet}` : secondsToSet
+
+        body.style.backgroundColor = colors[secondsToSet % 5]
+        body.style.transition = 'all 0.5s'
+      }
+
+      setTimeout(() => {
+        countdown.style.display = 'flex'
+      }, 1000)
+
+      setInterval(updateTime, 1000)
+    </script>
+  </body>
+</html>
